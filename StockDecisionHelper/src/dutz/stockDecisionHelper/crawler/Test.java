@@ -3,6 +3,11 @@ package dutz.stockDecisionHelper.crawler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
+import dutz.stockDecisionHelper.common.*;
+
 public class Test {
 
 	/**
@@ -21,12 +26,25 @@ public class Test {
 		 log.info("I am fine.");
 		 log.warn("I love programming.");
 		 log.error("I am programming.");
+		 
+		 /*
+	     * Guice.createInjector() takes your Modules, and returns a new Injector
+	     * instance. Most applications will call this method exactly once, in their
+	     * main() method.
+	     */
+	    Injector injector = Guice.createInjector(new CrawlerModule());
+
+	    /*
+	     * Now that we've got the injector, we can build objects.
+	     */
+	    DataParser dataParser = injector.getInstance(DataParser.class);
+	    
+	    Info result = dataParser.ParseInfo("");
+	    
+	    System.out.println("result: " + result.getId());
 	
 		
 	}
-	
-	public int TestMe() {
-		return 1;
-	}
+
 
 }
